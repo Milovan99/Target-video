@@ -13,12 +13,14 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
     private val viewModel: HomeViewModel by viewModels()
+    private val adapter: VideoAdapter by lazy { VideoAdapter() }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.recyclerViewVideos.adapter = adapter
         subscribeToObservable()
         viewModel.getVideos()
     }
@@ -27,9 +29,7 @@ class HomeActivity : AppCompatActivity() {
         viewModel.videosLiveDataState.observe(this) {
             when (it) {
                 is DataState.Loading -> Timber.d("Videos are loading")
-                is DataState.Success -> Timber.d(it.data?.items?.mapNotNull { itemsEntity -> itemsEntity.snippet?.title }
-                    .toString())
-
+                is DataState.Success -> adapter.submitList(it.data?.items)
                 is DataState.Error -> Timber.e(it.throwable)
             }
         }

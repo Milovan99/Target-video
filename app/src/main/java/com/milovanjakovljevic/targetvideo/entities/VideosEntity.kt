@@ -13,4 +13,13 @@ data class ItemsEntity(
 data class SnippetEntity(
     val title: String? = null,
     val description: String? = null,
+    val thumbnail: ThumbnailEntity? = null
+)
+
+data class ThumbnailEntity(
+    val default: DefaultEntity? = null
+)
+
+data class DefaultEntity(
+    val url: String? = null
 )

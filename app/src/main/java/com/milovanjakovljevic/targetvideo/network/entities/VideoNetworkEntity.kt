@@ -1,8 +1,10 @@
 package com.milovanjakovljevic.targetvideo.network.entities
 
 import com.google.gson.annotations.SerializedName
+import com.milovanjakovljevic.targetvideo.entities.DefaultEntity
 import com.milovanjakovljevic.targetvideo.entities.ItemsEntity
 import com.milovanjakovljevic.targetvideo.entities.SnippetEntity
+import com.milovanjakovljevic.targetvideo.entities.ThumbnailEntity
 import com.milovanjakovljevic.targetvideo.entities.VideosEntity
 
 data class VideoNetworkEntity(
@@ -87,5 +89,14 @@ fun ItemsNetworkEntity.toItemsEntity() = ItemsEntity(
 
 fun SnippetNetworkEntity.toSnippetEntity() = SnippetEntity(
     title = title,
-    description = description
+    description = description,
+    thumbnail = thumbnailsNetworkEntity?.toThumbnailEntity()
+)
+
+fun ThumbnailsNetworkEntity.toThumbnailEntity() = ThumbnailEntity(
+    default = defaultNetworkEntity?.toDefaultEntity()
+)
+
+fun DefaultNetworkEntity.toDefaultEntity() = DefaultEntity(
+    url = url
 )
