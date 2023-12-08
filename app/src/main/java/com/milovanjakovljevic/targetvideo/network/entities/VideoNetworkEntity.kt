@@ -1,5 +1,6 @@
 package com.milovanjakovljevic.targetvideo.network.entities
 
+import com.google.gson.annotations.SerializedName
 import com.milovanjakovljevic.targetvideo.entities.ItemsEntity
 import com.milovanjakovljevic.targetvideo.entities.SnippetEntity
 import com.milovanjakovljevic.targetvideo.entities.VideosEntity
@@ -10,7 +11,9 @@ data class VideoNetworkEntity(
     val nextPageToken: String? = null,
     val prevPageToken: String? = null,
     val regionToken: String? = null,
+    @SerializedName("pageInfo")
     val pageInfoNetworkEntity: PageInfoNetworkEntity = PageInfoNetworkEntity(),
+    @SerializedName("items")
     val itemsNetworkEntities: List<ItemsNetworkEntity> = listOf()
 )
 
@@ -22,7 +25,9 @@ data class PageInfoNetworkEntity(
 data class ItemsNetworkEntity(
     val kind: String? = null,
     val etag: String? = null,
+    @SerializedName("id")
     val idNetworkEntity: IdNetworkEntity = IdNetworkEntity(),
+    @SerializedName("snippet")
     val snippetNetworkEntity: SnippetNetworkEntity? = SnippetNetworkEntity()
 )
 
@@ -36,6 +41,7 @@ data class SnippetNetworkEntity(
     val channelId: String? = null,
     val title: String? = null,
     val description: String? = null,
+    @SerializedName("thumbnails")
     val thumbnailsNetworkEntity: ThumbnailsNetworkEntity? = ThumbnailsNetworkEntity(),
     val channelTitle: String? = null,
     val liveBroadcastContent: String? = null,
@@ -43,8 +49,11 @@ data class SnippetNetworkEntity(
 )
 
 data class ThumbnailsNetworkEntity(
+    @SerializedName("default")
     val defaultNetworkEntity: DefaultNetworkEntity? = DefaultNetworkEntity(),
+    @SerializedName("medium")
     val mediumNetworkEntity: MediumNetworkEntity? = MediumNetworkEntity(),
+    @SerializedName("height")
     val heightNetworkEntity: HeightNetworkEntity? = HeightNetworkEntity()
 )
 
