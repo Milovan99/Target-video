@@ -1,7 +1,7 @@
 package com.milovanjakovljevic.targetvideo.di
 
 import com.milovanjakovljevic.targetvideo.network.HeaderInterceptor
-import com.milovanjakovljevic.targetvideo.network.YoutubeVideosApi
+import com.milovanjakovljevic.targetvideo.network.ShutterstockVideosApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,13 +32,13 @@ class RetrofitModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
-            .baseUrl("https://www.googleapis.com")
+            .baseUrl("https://api.shutterstock.com")
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
 
     @Provides
     @Singleton
-    fun provideYoutubeApiService(retrofit: Retrofit): YoutubeVideosApi =
-        retrofit.create(YoutubeVideosApi::class.java)
+    fun provideShutterstockService(retrofit: Retrofit): ShutterstockVideosApi =
+        retrofit.create(ShutterstockVideosApi::class.java)
 }

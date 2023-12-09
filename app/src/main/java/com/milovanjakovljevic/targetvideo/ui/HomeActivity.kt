@@ -22,14 +22,14 @@ class HomeActivity : AppCompatActivity() {
 
         binding.recyclerViewVideos.adapter = adapter
         subscribeToObservable()
-        viewModel.getVideos()
+        viewModel.getVideos(1)
     }
 
     private fun subscribeToObservable() {
         viewModel.videosLiveDataState.observe(this) {
             when (it) {
                 is DataState.Loading -> Timber.d("Videos are loading")
-                is DataState.Success -> adapter.submitList(it.data?.items)
+                is DataState.Success -> adapter.submitList(it.data?.dataEntity)
                 is DataState.Error -> Timber.e(it.throwable)
             }
         }

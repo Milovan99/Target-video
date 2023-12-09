@@ -1,6 +1,6 @@
 package com.milovanjakovljevic.targetvideo.di
 
-import com.milovanjakovljevic.targetvideo.network.YoutubeVideosApi
+import com.milovanjakovljevic.targetvideo.network.ShutterstockVideosApi
 import com.milovanjakovljevic.targetvideo.repository.VideosRepository
 import dagger.Module
 import dagger.Provides
@@ -13,7 +13,7 @@ import javax.inject.Singleton
 class RepositoryModule {
     @Provides
     @Singleton
-    fun provideVideosRepository(youtubeVideosApi: YoutubeVideosApi): VideosRepository {
-        return VideosRepository(youtubeVideosApi)
+    fun provideVideosRepository(shutterstockVideosApi: ShutterstockVideosApi): VideosRepository {
+        return VideosRepository(shutterstockVideosApi)
     }
 }

@@ -23,9 +23,9 @@ class HomeViewModel
     private val mutableVideosDataState: MutableLiveData<DataState<VideosEntity?>> =
         MutableLiveData()
 
-    fun getVideos(pageToken: String = "") {
+    fun getVideos(page: Int, searchId: String = "") {
         viewModelScope.launch {
-            videosRepository.getVideos(pageToken).onEach {
+            videosRepository.getVideos(page, searchId).onEach {
                 mutableVideosDataState.postValue(it)
             }.launchIn(this)
         }

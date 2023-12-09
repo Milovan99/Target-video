@@ -1,102 +1,92 @@
 package com.milovanjakovljevic.targetvideo.network.entities
 
 import com.google.gson.annotations.SerializedName
-import com.milovanjakovljevic.targetvideo.entities.DefaultEntity
-import com.milovanjakovljevic.targetvideo.entities.ItemsEntity
-import com.milovanjakovljevic.targetvideo.entities.SnippetEntity
-import com.milovanjakovljevic.targetvideo.entities.ThumbnailEntity
+import com.milovanjakovljevic.targetvideo.entities.DataEntity
 import com.milovanjakovljevic.targetvideo.entities.VideosEntity
 
 data class VideoNetworkEntity(
-    val kind: String? = null,
-    val etag: String? = null,
-    val nextPageToken: String? = null,
-    val prevPageToken: String? = null,
-    val regionToken: String? = null,
-    @SerializedName("pageInfo")
-    val pageInfoNetworkEntity: PageInfoNetworkEntity = PageInfoNetworkEntity(),
-    @SerializedName("items")
-    val itemsNetworkEntities: List<ItemsNetworkEntity> = listOf()
+    val page: Int? = null,
+    @SerializedName("per_page")
+    val perPage: Int? = null,
+    @SerializedName("total_count")
+    val totalCount: Int? = null,
+    @SerializedName("search_id")
+    val searchId: String? = null,
+    @SerializedName("data")
+    val dataNetworkEntity: List<DataNetworkEntity?> = listOf()
 )
 
-data class PageInfoNetworkEntity(
-    val totalResults: Long? = null,
-    val resultPerPage: Int? = null
-)
-
-data class ItemsNetworkEntity(
-    val kind: String? = null,
-    val etag: String? = null,
-    @SerializedName("id")
-    val idNetworkEntity: IdNetworkEntity = IdNetworkEntity(),
-    @SerializedName("snippet")
-    val snippetNetworkEntity: SnippetNetworkEntity? = SnippetNetworkEntity()
-)
-
-data class IdNetworkEntity(
-    val kind: String? = null,
-    val videoId: String? = null
-)
-
-data class SnippetNetworkEntity(
-    val publishedAt: String? = null,
-    val channelId: String? = null,
-    val title: String? = null,
+data class DataNetworkEntity(
+    val id: String? = null,
+    val aspect: Float? = null,
+    @SerializedName("aspect_ratio")
+    val aspectRatio: String? = null,
+    @SerializedName("assets")
+    val assetsNetworkEntity: AssetsNetworkEntity? = AssetsNetworkEntity(),
+    @SerializedName("contributor")
+    val contributorNetworkEntity: ContributorNetworkEntity? = ContributorNetworkEntity(),
     val description: String? = null,
-    @SerializedName("thumbnails")
-    val thumbnailsNetworkEntity: ThumbnailsNetworkEntity? = ThumbnailsNetworkEntity(),
-    val channelTitle: String? = null,
-    val liveBroadcastContent: String? = null,
-    val publishTime: String? = null
+    val duration: Int? = null,
+    @SerializedName("has_model_release")
+    val hasModelRelease: Boolean? = null,
+    @SerializedName("media_type")
+    val mediaType: String? = null,
+    @SerializedName("original_filename")
+    val originalFilename: String? = null
 )
 
-data class ThumbnailsNetworkEntity(
-    @SerializedName("default")
-    val defaultNetworkEntity: DefaultNetworkEntity? = DefaultNetworkEntity(),
-    @SerializedName("medium")
-    val mediumNetworkEntity: MediumNetworkEntity? = MediumNetworkEntity(),
-    @SerializedName("height")
-    val heightNetworkEntity: HeightNetworkEntity? = HeightNetworkEntity()
+data class AssetsNetworkEntity(
+    @SerializedName("thumb_webm")
+    val thumbWebmNetworkEntity: ThumbWebmNetworkEntity? = ThumbWebmNetworkEntity(),
+    @SerializedName("thumb_mp4")
+    val thumbMp4NetworkEntity: ThumbMp4NetworkEntity? = ThumbMp4NetworkEntity(),
+    @SerializedName("preview_webm")
+    val previewWebmNetworkEntity: PreviewWebmNetworkEntity? = PreviewWebmNetworkEntity(),
+    @SerializedName("preview_mp4")
+    val previewMp4NetworkEntity: PreviewMp4NetworkEntity? = PreviewMp4NetworkEntity(),
+    @SerializedName("thumb_jpg")
+    val thumbJpgNetworkEntity: ThumbJpgNetworkEntity? = ThumbJpgNetworkEntity(),
+    @SerializedName("preview_jpg")
+    val previewJpgNetworkEntity: PreviewJpgNetworkEntity? = PreviewJpgNetworkEntity()
 )
 
-data class DefaultNetworkEntity(
-    val url: String? = null,
-    val width: Int? = null,
-    val height: Int? = null
+data class ContributorNetworkEntity(
+    val id: String? = null
 )
 
-data class MediumNetworkEntity(
-    val url: String? = null,
-    val width: Int? = null,
-    val height: Int? = null
+data class ThumbWebmNetworkEntity(
+    val url: String? = null
 )
 
-data class HeightNetworkEntity(
-    val url: String? = null,
-    val width: Int? = null,
-    val height: Int? = null
+data class ThumbMp4NetworkEntity(
+    val url: String? = null
 )
 
-fun VideoNetworkEntity.toVideoEntity() = VideosEntity(
-    nextPageToken = nextPageToken,
-    prevPageToken = prevPageToken,
-    items = itemsNetworkEntities.map { it.toItemsEntity() }
+data class PreviewWebmNetworkEntity(
+    val url: String? = null
 )
 
-fun ItemsNetworkEntity.toItemsEntity() = ItemsEntity(
-    snippet = snippetNetworkEntity?.toSnippetEntity()
+data class PreviewMp4NetworkEntity(
+    val url: String? = null
 )
 
-fun SnippetNetworkEntity.toSnippetEntity() = SnippetEntity(
-    title = title,
+data class ThumbJpgNetworkEntity(
+    val url: String? = null
+)
+
+data class PreviewJpgNetworkEntity(
+    val url: String? = null
+)
+
+fun VideoNetworkEntity.toVideosEntity() = VideosEntity(
+    page = page,
+    searchId = searchId,
+    dataEntity = dataNetworkEntity.mapNotNull { it?.toDataEntity() }
+)
+
+fun DataNetworkEntity.toDataEntity() = DataEntity(
+    id = id,
     description = description,
-    thumbnail = thumbnailsNetworkEntity?.toThumbnailEntity()
-)
-
-fun ThumbnailsNetworkEntity.toThumbnailEntity() = ThumbnailEntity(
-    default = defaultNetworkEntity?.toDefaultEntity()
-)
-
-fun DefaultNetworkEntity.toDefaultEntity() = DefaultEntity(
-    url = url
+    thumbnailImage = assetsNetworkEntity?.thumbJpgNetworkEntity?.url,
+    videoMp4 = assetsNetworkEntity?.previewMp4NetworkEntity?.url
 )

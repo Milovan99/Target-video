@@ -1,25 +1,14 @@
 package com.milovanjakovljevic.targetvideo.entities
 
 data class VideosEntity(
-    val nextPageToken: String?,
-    val prevPageToken: String?,
-    val items: List<ItemsEntity>,
+    val page: Int?,
+    val searchId: String?,
+    val dataEntity: List<DataEntity>
 )
 
-data class ItemsEntity(
-    val snippet: SnippetEntity? = SnippetEntity()
-)
-
-data class SnippetEntity(
-    val title: String? = null,
-    val description: String? = null,
-    val thumbnail: ThumbnailEntity? = null
-)
-
-data class ThumbnailEntity(
-    val default: DefaultEntity? = null
-)
-
-data class DefaultEntity(
-    val url: String? = null
+data class DataEntity(
+    val id: String?,
+    val description: String?,
+    val thumbnailImage: String?,
+    val videoMp4: String?
 )

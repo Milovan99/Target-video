@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.milovanjakovljevic.targetvideo.databinding.ItemVideoBinding
-import com.milovanjakovljevic.targetvideo.entities.ItemsEntity
+import com.milovanjakovljevic.targetvideo.entities.DataEntity
 
-class VideoAdapter : ListAdapter<ItemsEntity, VideoAdapter.VideoViewHolder>(VideoDiffUtil()) {
+class VideoAdapter : ListAdapter<DataEntity, VideoAdapter.VideoViewHolder>(VideoDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoViewHolder {
         val view = ItemVideoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -17,32 +17,31 @@ class VideoAdapter : ListAdapter<ItemsEntity, VideoAdapter.VideoViewHolder>(Vide
     }
 
     override fun onBindViewHolder(holder: VideoViewHolder, position: Int) {
-        val video: ItemsEntity = getItem(position)
+        val video: DataEntity = getItem(position)
         holder.bind(video)
     }
 
     inner class VideoViewHolder(private val binding: ItemVideoBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(video: ItemsEntity) {
+        fun bind(video: DataEntity) {
             Glide.with(binding.videoThumbnail)
-                .load(video.snippet?.thumbnail?.default?.url)
+                .load(video.thumbnailImage)
                 .into(binding.videoThumbnail)
-            binding.videoTitle.text = video.snippet?.title
+            binding.videoTitle.text = video.description
         }
     }
 
-    class VideoDiffUtil : DiffUtil.ItemCallback<ItemsEntity>() {
-        //Fixme oldItem.id == newItem.id
+    class VideoDiffUtil : DiffUtil.ItemCallback<DataEntity>() {
         override fun areItemsTheSame(
-            oldItem: ItemsEntity,
-            newItem: ItemsEntity
+            oldItem: DataEntity,
+            newItem: DataEntity
         ): Boolean {
-            return oldItem == newItem
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
-            oldItem: ItemsEntity,
-            newItem: ItemsEntity
+            oldItem: DataEntity,
+            newItem: DataEntity
         ): Boolean {
             return oldItem == newItem
         }

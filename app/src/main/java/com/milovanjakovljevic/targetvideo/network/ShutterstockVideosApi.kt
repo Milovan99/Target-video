@@ -4,12 +4,10 @@ import com.milovanjakovljevic.targetvideo.network.entities.VideoNetworkEntity
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface YoutubeVideosApi {
-    @GET("youtube/v3/search")
+interface ShutterstockVideosApi {
+    @GET("/v2/videos/search")
     suspend fun getVideos(
-        @Query("part") part: String,
-        @Query("q") query: String,
-        @Query("maxResults") maxResults: Int,
-        @Query("pageToken") pageToken: String?
+        @Query("page") page: Int,
+        @Query("search_id") searchId: String,
     ): VideoNetworkEntity
 }
