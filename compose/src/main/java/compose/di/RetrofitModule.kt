@@ -1,7 +1,7 @@
 package compose.di
 
-import compose.network.HeaderInterceptor
-import compose.network.ShutterstockVideosApi
+import com.example.network.HeaderInterceptor
+import com.example.network.ShutterstockVideosApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

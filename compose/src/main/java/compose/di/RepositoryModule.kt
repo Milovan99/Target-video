@@ -1,6 +1,6 @@
 package compose.di
 
-import compose.network.ShutterstockVideosApi
+import com.example.network.ShutterstockVideosApi
 import compose.repository.VideosRepository
 import dagger.Module
 import dagger.Provides

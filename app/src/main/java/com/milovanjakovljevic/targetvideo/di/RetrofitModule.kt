@@ -1,7 +1,7 @@
 package com.milovanjakovljevic.targetvideo.di
 
-import com.milovanjakovljevic.targetvideo.network.HeaderInterceptor
-import com.milovanjakovljevic.targetvideo.network.ShutterstockVideosApi
+import com.example.network.HeaderInterceptor
+import com.example.network.ShutterstockVideosApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

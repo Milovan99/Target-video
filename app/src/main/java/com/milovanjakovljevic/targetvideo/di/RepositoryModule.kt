@@ -1,6 +1,6 @@
 package com.milovanjakovljevic.targetvideo.di
 
-import com.milovanjakovljevic.targetvideo.network.ShutterstockVideosApi
+import com.example.network.ShutterstockVideosApi
 import com.milovanjakovljevic.targetvideo.repository.VideosRepository
 import dagger.Module
 import dagger.Provides

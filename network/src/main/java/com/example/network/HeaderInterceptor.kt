@@ -1,4 +1,4 @@
-package com.milovanjakovljevic.targetvideo.network
+package com.example.network
 
 import okhttp3.Interceptor
 import okhttp3.Response

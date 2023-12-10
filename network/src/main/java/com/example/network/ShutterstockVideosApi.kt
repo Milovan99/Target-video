@@ -1,6 +1,6 @@
-package compose.network
+package com.example.network
 
-import compose.network.entities.VideoNetworkEntity
+import com.example.network.entities.VideoNetworkEntity
 import retrofit2.http.GET
 import retrofit2.http.Query
 

@@ -1,8 +1,6 @@
-package compose.network.entities
+package com.example.network.entities
 
 import com.google.gson.annotations.SerializedName
-import compose.entities.DataEntity
-import compose.entities.VideosEntity
 
 data class VideoNetworkEntity(
     val page: Int? = null,
@@ -76,18 +74,4 @@ data class ThumbJpgNetworkEntity(
 
 data class PreviewJpgNetworkEntity(
     val url: String? = null
-)
-
-fun VideoNetworkEntity.toVideosEntity() = VideosEntity(
-    page = page,
-    searchId = searchId,
-    dataEntity = dataNetworkEntity.mapNotNull { it?.toDataEntity() }
-)
-
-fun DataNetworkEntity.toDataEntity() = DataEntity(
-    id = id,
-    description = description,
-    thumbnailImage = assetsNetworkEntity?.thumbJpgNetworkEntity?.url,
-    videoMp4 = assetsNetworkEntity?.previewMp4NetworkEntity?.url,
-    videoTitle = originalFilename
 )

@@ -1,10 +1,9 @@
 package com.milovanjakovljevic.targetvideo.repository
 
+import com.example.network.ShutterstockVideosApi
 import com.milovanjakovljevic.targetvideo.entities.DataState
 import com.milovanjakovljevic.targetvideo.entities.VideosEntity
-import com.milovanjakovljevic.targetvideo.network.ShutterstockVideosApi
-import com.milovanjakovljevic.targetvideo.network.entities.toVideosEntity
-
+import com.milovanjakovljevic.targetvideo.entities.toVideosEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch

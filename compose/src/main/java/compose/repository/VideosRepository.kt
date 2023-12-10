@@ -1,8 +1,8 @@
 package compose.repository
 
+import com.example.network.ShutterstockVideosApi
 import compose.entities.VideosEntity
-import compose.network.ShutterstockVideosApi
-import compose.network.entities.toVideosEntity
+import compose.entities.toVideosEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
