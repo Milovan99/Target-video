@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Target video"
 include(":app")
+include(":compose")
