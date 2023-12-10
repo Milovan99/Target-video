@@ -15,7 +15,7 @@
 
     <application android:name="compose.ComposeApplication">
         <activity
-            android:name="compose.HomeActivity"
+            android:name="compose.ui.HomeActivity"
             android:exported="true"
             android:label="@string/title_activity_home"
             android:theme="@style/Theme.TargetVideo" >
@@ -25,6 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="compose.ui.PlayerActivity" />
     </application>
 
 </manifest>

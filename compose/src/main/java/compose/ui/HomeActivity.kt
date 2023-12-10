@@ -1,11 +1,14 @@
-package compose
+package compose.ui
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,6 +33,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -64,6 +68,7 @@ fun GridOfVideos(
 ) {
     val videoState by composeViewModel.videoDataState.collectAsState()
     composeViewModel.getVideos(1)
+    val context = LocalContext.current
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier
@@ -77,6 +82,15 @@ fun GridOfVideos(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(120.dp)
+                    .clickable {
+                        openPlayer(
+                            context,
+                            videoEntity.videoMp4,
+                            videoEntity.videoTitle,
+                            videoEntity.description
+                        )
+                    }
+
             ) {
                 Image(
                     painter = rememberImagePainter(data = videoEntity.thumbnailImage),
@@ -125,4 +139,18 @@ fun GridOfVideos(
             }
         }
     }
+}
+
+fun openPlayer(
+    context: Context,
+    videoUrl: String?,
+    videoTitle: String?,
+    videoDescription: String?
+) {
+    val intent = Intent(context, PlayerActivity::class.java).apply {
+        putExtra("VIDEO_URL", videoUrl)
+        putExtra("VIDEO_TITLE", videoTitle)
+        putExtra("VIDEO_DESCRIPTION", videoDescription)
+    }
+    context.startActivity(intent, null)
 }
