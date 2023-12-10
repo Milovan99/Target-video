@@ -1,7 +1,7 @@
-package com.milovanjakovljevic.targetvideo.di
+package compose.di
 
 import com.example.network.ShutterstockVideosApi
-import com.milovanjakovljevic.targetvideo.repository.VideosRepository
+import compose.repository.VideosRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

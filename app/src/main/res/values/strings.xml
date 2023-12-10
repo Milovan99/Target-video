@@ -5,4 +5,6 @@
     <string name="change_screen_size">Change screen size</string>
     <string name="play_next_video">Play next video</string>
     <string name="play_pause_video">Play/pause video</string>
+    <string name="title_compose">Compose</string>
+    <string name="title_activity_home">HomeActivity</string>
 </resources>

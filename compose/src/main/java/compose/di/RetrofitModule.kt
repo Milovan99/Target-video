@@ -1,4 +1,4 @@
-package com.milovanjakovljevic.targetvideo.di
+package compose.di
 
 import com.example.network.HeaderInterceptor
 import com.example.network.ShutterstockVideosApi

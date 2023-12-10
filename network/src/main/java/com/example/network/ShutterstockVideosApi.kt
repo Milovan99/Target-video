@@ -1,6 +1,6 @@
-package com.milovanjakovljevic.targetvideo.network
+package com.example.network
 
-import com.milovanjakovljevic.targetvideo.network.entities.VideoNetworkEntity
+import com.example.network.entities.VideoNetworkEntity
 import retrofit2.http.GET
 import retrofit2.http.Query
 

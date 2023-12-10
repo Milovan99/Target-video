@@ -15,3 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Target video"
 include(":app")
+include(":compose")
+include(":network")
