@@ -8,18 +8,26 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import compose.ui.theme.ComposeViewModel
 import compose.ui.theme.TargetVideoTheme
+import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
+@AndroidEntryPoint
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             TargetVideoTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    Greeting("Android")
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    Greeting()
                 }
             }
         }
@@ -27,17 +35,15 @@ class HomeActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun Greeting(
+    modifier: Modifier = Modifier,
+    composeViewModel: ComposeViewModel = viewModel()
+) {
     Text(
-        text = "Hello $name!",
+        text = "Home activity",
         modifier = modifier
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    TargetVideoTheme {
-        Greeting("Android")
-    }
+    val videoState by composeViewModel.videoDataState.collectAsState()
+    composeViewModel.getVideos(1)
+    Timber.e(videoState?.dataEntity?.mapNotNull { it.videoMp4 }.toString())
 }
