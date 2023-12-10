@@ -37,9 +37,14 @@ class HomeActivity : AppCompatActivity(), VideoAdapter.IVideoClickListener {
         }
     }
 
+    //Fixme rename videoId to videoUrl
     override fun onVideoClick(videoId: String) {
         Intent(this, PlayerActivity::class.java).apply {
             this.putExtra("VIDEO_ID", videoId)
+            PlayerActivity.apply {
+                this.positionOfVideo = 0
+                this.isFullScreen = false
+            }
             startActivity(this)
         }
     }

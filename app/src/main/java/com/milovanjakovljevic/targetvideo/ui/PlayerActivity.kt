@@ -19,9 +19,9 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPlayerBinding
     private lateinit var player: ExoPlayer
 
-    companion object {
-        private var isFullScreen = false
-        private var positionOfVideo: Long = 0
+    companion object Info {
+        var isFullScreen = false
+        var positionOfVideo: Long = 0
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -63,10 +63,13 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun toggleFullScreen() {
-        val time = findViewById<TextView>(androidx.media3.ui.R.id.exo_position).text.toString()
-        positionOfVideo = timeToSeconds(time)
         requestedOrientation =
             if (isFullScreen) ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE else ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+    }
+
+    private fun saveTime() {
+        val time = findViewById<TextView>(androidx.media3.ui.R.id.exo_position).text.toString()
+        positionOfVideo = timeToSeconds(time)
     }
 
     private fun timeToSeconds(timeString: String): Long {
@@ -103,12 +106,6 @@ class PlayerActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         player.release()
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        super.onBackPressed()
-        positionOfVideo = 0
-        isFullScreen = false
+        saveTime()
     }
 }
