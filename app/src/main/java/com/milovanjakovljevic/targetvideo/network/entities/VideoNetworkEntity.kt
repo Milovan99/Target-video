@@ -88,5 +88,6 @@ fun DataNetworkEntity.toDataEntity() = DataEntity(
     id = id,
     description = description,
     thumbnailImage = assetsNetworkEntity?.thumbJpgNetworkEntity?.url,
-    videoMp4 = assetsNetworkEntity?.previewMp4NetworkEntity?.url
+    videoMp4 = assetsNetworkEntity?.previewMp4NetworkEntity?.url,
+    videoTitle = originalFilename
 )

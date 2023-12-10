@@ -34,13 +34,13 @@ class PlayerActivity : AppCompatActivity() {
         //Fixme move to companion object
         val videoUrl = intent.getStringExtra("VIDEO_URL")
         val videoDescription = intent.getStringExtra("VIDEO_DESCRIPTION")
-        val title = getTitle(videoDescription)
+        val videoTitle = intent.getStringExtra("VIDEO_TITLE")
 
-        binding.textViewTitle.text = title
+        binding.textViewTitle.text = videoTitle
         binding.textViewDescription.text = videoDescription
 
         val exoPlayerTitle = findViewById<TextView>(R.id.exo_title)
-        exoPlayerTitle.text = title
+        exoPlayerTitle.text = videoTitle
 
         player = ExoPlayer.Builder(this).build()
         binding.exoPlayerView.player = player
@@ -79,10 +79,10 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun saveTime() {
         val time = findViewById<TextView>(androidx.media3.ui.R.id.exo_position).text.toString()
-        positionOfVideo = timeToSeconds(time)
+        positionOfVideo = timeStringToMilliseconds(time)
     }
 
-    private fun timeToSeconds(timeString: String): Long {
+    private fun timeStringToMilliseconds(timeString: String): Long {
         val parts = timeString.split(":")
 
         // Extract hours, minutes, and seconds from the parts
@@ -91,7 +91,7 @@ class PlayerActivity : AppCompatActivity() {
         val seconds = parts[parts.size - 1].toLong()
 
         // Calculate total duration in seconds
-        return (hours * 3600 + minutes * 60 + seconds) * 1000
+        return (hours * 3600 + minutes * 60 + seconds) * 1000 // return milliseconds
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -111,18 +111,6 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun unmuteVideo() {
         player.volume = 1.0f
-    }
-
-
-    //I made this functions as improvisation to get video title because JSON response doesn't provide title
-    private fun getTitle(string: String?): String {
-        val words = string?.split("\\s+".toRegex()) ?: listOf("")
-
-        return when (words.size) {
-            0 -> "" // Empty string
-            1 -> words[0] // Only one word
-            else -> "${words[0]} ${words[1]}" // Two words
-        }
     }
 
     override fun onDestroy() {

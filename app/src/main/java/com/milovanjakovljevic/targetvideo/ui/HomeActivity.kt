@@ -83,10 +83,11 @@ class HomeActivity : AppCompatActivity(), VideoAdapter.IVideoClickListener {
         viewModel.getVideos(page, searchId)
     }
 
-    override fun onVideoClick(videoUrl: String?, videoDescription: String?) {
+    override fun onVideoClick(videoUrl: String?, videoDescription: String?, videoTitle: String?) {
         Intent(this, PlayerActivity::class.java).apply {
             this.putExtra("VIDEO_URL", videoUrl)
             this.putExtra("VIDEO_DESCRIPTION", videoDescription)
+            this.putExtra("VIDEO_TITLE", videoTitle)
             PlayerActivity.apply {
                 this.positionOfVideo = 0
                 this.isFullScreen = false

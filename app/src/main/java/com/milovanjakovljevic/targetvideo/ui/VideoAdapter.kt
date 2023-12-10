@@ -12,7 +12,7 @@ import com.milovanjakovljevic.targetvideo.entities.DataEntity
 class VideoAdapter : ListAdapter<DataEntity, VideoAdapter.VideoViewHolder>(VideoDiffUtil()) {
 
     interface IVideoClickListener {
-        fun onVideoClick(videoUrl: String?, videoDescription: String?)
+        fun onVideoClick(videoUrl: String?, videoDescription: String?, videoTitle: String?)
     }
 
     lateinit var videoClickListener: IVideoClickListener
@@ -35,9 +35,10 @@ class VideoAdapter : ListAdapter<DataEntity, VideoAdapter.VideoViewHolder>(Video
                 .into(binding.videoThumbnail)
 
             binding.videoThumbnail.setOnClickListener {
-                videoClickListener.onVideoClick(video.videoMp4, video.description)
+                videoClickListener.onVideoClick(video.videoMp4, video.description, video.videoTitle)
             }
-            binding.videoTitle.text = video.description
+            // JSON doesn't provide in his response title of video , so I put file name to be title
+            binding.videoTitle.text = video.videoTitle
         }
     }
 

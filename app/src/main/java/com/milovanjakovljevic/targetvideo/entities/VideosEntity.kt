@@ -10,5 +10,6 @@ data class DataEntity(
     val id: String?,
     val description: String?,
     val thumbnailImage: String?,
-    val videoMp4: String?
+    val videoMp4: String?,
+    val videoTitle: String?
 )
