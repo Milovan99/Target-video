@@ -81,7 +81,6 @@ fun GridOfVideos(
     composeViewModel: ComposeViewModel = viewModel()
 ) {
     val videoState by composeViewModel.videoDataState.collectAsState()
-    searchId = videoState?.searchId.toString()
     val videoList by remember { mutableStateOf(mutableListOf<VideosEntity>()) }
     videoState?.let { videoList.add(it) }
     composeViewModel.getVideos(1)
@@ -164,6 +163,7 @@ fun GridOfVideos(
                 if (lastIndex == numberOfVideos) {
                     numberOfVideos += 20
                     page++
+                    searchId = videoEntity.searchId.toString()
                     composeViewModel.getVideos(page = page, searchId)
                 }
             }

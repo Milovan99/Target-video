@@ -14,19 +14,20 @@ data class DataEntity(
     val description: String?,
     val thumbnailImage: String?,
     val videoMp4: String?,
-    val videoTitle: String?
+    val videoTitle: String?,
+    val searchId: String?
 )
 
 fun VideoNetworkEntity.toVideosEntity() = VideosEntity(
     page = page,
-    searchId = searchId,
-    dataEntity = dataNetworkEntity.mapNotNull { it?.toDataEntity() }
+    dataEntity = dataNetworkEntity.mapNotNull { it?.toDataEntity(searchId) }
 )
 
-fun DataNetworkEntity.toDataEntity() = DataEntity(
+fun DataNetworkEntity.toDataEntity(searchId: String?) = DataEntity(
     id = id,
     description = description,
     thumbnailImage = assetsNetworkEntity?.thumbJpgNetworkEntity?.url,
     videoMp4 = assetsNetworkEntity?.previewMp4NetworkEntity?.url,
-    videoTitle = originalFilename
+    videoTitle = originalFilename,
+    searchId = searchId
 )
