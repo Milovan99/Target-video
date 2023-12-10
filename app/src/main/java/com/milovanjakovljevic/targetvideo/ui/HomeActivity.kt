@@ -2,6 +2,7 @@ package com.milovanjakovljevic.targetvideo.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -18,7 +19,6 @@ class HomeActivity : AppCompatActivity(), VideoAdapter.IVideoClickListener {
     private val viewModel: HomeViewModel by viewModels()
     private val adapter: VideoAdapter by lazy { VideoAdapter() }
     private var isLoading = false
-    private var ss = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -27,17 +27,16 @@ class HomeActivity : AppCompatActivity(), VideoAdapter.IVideoClickListener {
 
         adapter.videoClickListener = this
         binding.recyclerViewVideos.adapter = adapter
+        val layoutManager = GridLayoutManager(this, 2)
+        binding.recyclerViewVideos.layoutManager = layoutManager
 
         binding.recyclerViewVideos.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                val layoutManager = recyclerView.layoutManager as GridLayoutManager
                 val visibleItemCount = layoutManager.childCount
                 val totalItemCount = layoutManager.itemCount
                 val firstVisibleItem = layoutManager.findFirstVisibleItemPosition()
-
-                if (!isLoading && (visibleItemCount + firstVisibleItem) >= totalItemCount
-                    && firstVisibleItem >= 0 && totalItemCount >= viewModel.videosTuShow.value!!
+                if (!isLoading && (visibleItemCount + firstVisibleItem) >= totalItemCount && firstVisibleItem >= 0
                 ) {
                     loadMoreVideoClips()
                 }
@@ -45,7 +44,6 @@ class HomeActivity : AppCompatActivity(), VideoAdapter.IVideoClickListener {
         })
 
         subscribeToObservable()
-        //Fixme add page logic and shift id
         viewModel.getVideos(1)
     }
 
@@ -54,6 +52,7 @@ class HomeActivity : AppCompatActivity(), VideoAdapter.IVideoClickListener {
             when (it) {
                 is DataState.Loading -> {
                     isLoading = true
+                    binding.progressBarLoadingVideos.visibility = View.VISIBLE
                     Timber.d("Videos are loading")
                 }
 
@@ -62,31 +61,42 @@ class HomeActivity : AppCompatActivity(), VideoAdapter.IVideoClickListener {
                     if (it.data?.dataEntity != null) {
                         if (adapter.currentList.size > 0) {
                             adapter.submitList(adapter.currentList + it.data.dataEntity)
-                            viewModel.videosTuShow.postValue(viewModel.videosTuShow.value?.plus(20))
                         } else {
                             adapter.submitList(it.data.dataEntity)
                         }
+                        page += 1
+                        searchId = it.data.searchId.toString()
                     }
+                    binding.progressBarLoadingVideos.visibility = View.GONE
                 }
 
-                is DataState.Error -> Timber.e(it.throwable)
+                is DataState.Error -> {
+                    isLoading = false
+                    binding.progressBarLoadingVideos.visibility = View.GONE
+                    Timber.e(it.throwable)
+                }
             }
         }
     }
 
     private fun loadMoreVideoClips() {
-        viewModel.getVideos(2)
+        viewModel.getVideos(page, searchId)
     }
 
     //Fixme rename videoId to videoUrl
-    override fun onVideoClick(videoId: String) {
+    override fun onVideoClick(videoUrl: String) {
         Intent(this, PlayerActivity::class.java).apply {
-            this.putExtra("VIDEO_ID", videoId)
+            this.putExtra("VIDEO_URL", videoUrl)
             PlayerActivity.apply {
                 this.positionOfVideo = 0
                 this.isFullScreen = false
             }
             startActivity(this)
         }
+    }
+
+    companion object {
+        private var page: Int = 1
+        private var searchId: String = ""
     }
 }

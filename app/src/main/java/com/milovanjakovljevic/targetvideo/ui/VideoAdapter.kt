@@ -12,7 +12,7 @@ import com.milovanjakovljevic.targetvideo.entities.DataEntity
 class VideoAdapter : ListAdapter<DataEntity, VideoAdapter.VideoViewHolder>(VideoDiffUtil()) {
 
     interface IVideoClickListener {
-        fun onVideoClick(videoId: String)
+        fun onVideoClick(videoUrl: String)
     }
 
     lateinit var videoClickListener: IVideoClickListener

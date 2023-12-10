@@ -20,8 +20,6 @@ class HomeViewModel
     val videosLiveDataState: LiveData<DataState<VideosEntity?>>
         get() = mutableVideosDataState
 
-    val videosTuShow: MutableLiveData<Long> = MutableLiveData(20)
-
     private val mutableVideosDataState: MutableLiveData<DataState<VideosEntity?>> =
         MutableLiveData()
 

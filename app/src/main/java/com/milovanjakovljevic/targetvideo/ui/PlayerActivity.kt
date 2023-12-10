@@ -31,12 +31,13 @@ class PlayerActivity : AppCompatActivity() {
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val videoId = intent.getStringExtra("VIDEO_ID")
+        //Fixme move to companion object
+        val videoUrl = intent.getStringExtra("VIDEO_URL")
         player = ExoPlayer.Builder(this).build()
         binding.exoPlayerView.player = player
 
-        if (!videoId.isNullOrEmpty()) {
-            initializePlayer(videoId)
+        if (!videoUrl.isNullOrEmpty()) {
+            initializePlayer(videoUrl)
         }
         setController()
     }
