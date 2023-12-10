@@ -15,8 +15,13 @@
         android:theme="@style/Theme.TargetVideo"
         tools:targetApi="31">
         <activity
+            android:name=".ui.PlayerActivity"
+            android:exported="false"
+            android:screenOrientation="fullSensor"/>
+        <activity
             android:name=".ui.HomeActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

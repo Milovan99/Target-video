@@ -9,6 +9,7 @@ class HeaderInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val url = chain.request().url().newBuilder()
             .addQueryParameter("per_page", "20")
+            .addQueryParameter("query", "movies")
             .build()
 
         val request = chain.request().newBuilder()

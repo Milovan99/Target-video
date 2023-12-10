@@ -11,6 +11,12 @@ import com.milovanjakovljevic.targetvideo.entities.DataEntity
 
 class VideoAdapter : ListAdapter<DataEntity, VideoAdapter.VideoViewHolder>(VideoDiffUtil()) {
 
+    interface IVideoClickListener {
+        fun onVideoClick(videoId: String)
+    }
+
+    lateinit var videoClickListener: IVideoClickListener
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoViewHolder {
         val view = ItemVideoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return VideoViewHolder(view)
@@ -27,6 +33,10 @@ class VideoAdapter : ListAdapter<DataEntity, VideoAdapter.VideoViewHolder>(Video
             Glide.with(binding.videoThumbnail)
                 .load(video.thumbnailImage)
                 .into(binding.videoThumbnail)
+
+            binding.videoThumbnail.setOnClickListener {
+                video.videoMp4?.let { videoUrl -> videoClickListener.onVideoClick(videoUrl) }
+            }
             binding.videoTitle.text = video.description
         }
     }
