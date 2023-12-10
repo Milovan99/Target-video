@@ -33,6 +33,15 @@ class PlayerActivity : AppCompatActivity() {
 
         //Fixme move to companion object
         val videoUrl = intent.getStringExtra("VIDEO_URL")
+        val videoDescription = intent.getStringExtra("VIDEO_DESCRIPTION")
+        val title = getTitle(videoDescription)
+
+        binding.textViewTitle.text = title
+        binding.textViewDescription.text = videoDescription
+
+        val exoPlayerTitle = findViewById<TextView>(R.id.exo_title)
+        exoPlayerTitle.text = title
+
         player = ExoPlayer.Builder(this).build()
         binding.exoPlayerView.player = player
 
@@ -102,6 +111,18 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun unmuteVideo() {
         player.volume = 1.0f
+    }
+
+
+    //I made this functions as improvisation to get video title because JSON response doesn't provide title
+    private fun getTitle(string: String?): String {
+        val words = string?.split("\\s+".toRegex()) ?: listOf("")
+
+        return when (words.size) {
+            0 -> "" // Empty string
+            1 -> words[0] // Only one word
+            else -> "${words[0]} ${words[1]}" // Two words
+        }
     }
 
     override fun onDestroy() {

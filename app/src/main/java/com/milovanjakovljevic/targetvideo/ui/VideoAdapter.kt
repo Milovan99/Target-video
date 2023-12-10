@@ -12,7 +12,7 @@ import com.milovanjakovljevic.targetvideo.entities.DataEntity
 class VideoAdapter : ListAdapter<DataEntity, VideoAdapter.VideoViewHolder>(VideoDiffUtil()) {
 
     interface IVideoClickListener {
-        fun onVideoClick(videoUrl: String)
+        fun onVideoClick(videoUrl: String?, videoDescription: String?)
     }
 
     lateinit var videoClickListener: IVideoClickListener
@@ -35,7 +35,7 @@ class VideoAdapter : ListAdapter<DataEntity, VideoAdapter.VideoViewHolder>(Video
                 .into(binding.videoThumbnail)
 
             binding.videoThumbnail.setOnClickListener {
-                video.videoMp4?.let { videoUrl -> videoClickListener.onVideoClick(videoUrl) }
+                videoClickListener.onVideoClick(video.videoMp4, video.description)
             }
             binding.videoTitle.text = video.description
         }

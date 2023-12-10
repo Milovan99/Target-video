@@ -83,10 +83,10 @@ class HomeActivity : AppCompatActivity(), VideoAdapter.IVideoClickListener {
         viewModel.getVideos(page, searchId)
     }
 
-    //Fixme rename videoId to videoUrl
-    override fun onVideoClick(videoUrl: String) {
+    override fun onVideoClick(videoUrl: String?, videoDescription: String?) {
         Intent(this, PlayerActivity::class.java).apply {
             this.putExtra("VIDEO_URL", videoUrl)
+            this.putExtra("VIDEO_DESCRIPTION", videoDescription)
             PlayerActivity.apply {
                 this.positionOfVideo = 0
                 this.isFullScreen = false
